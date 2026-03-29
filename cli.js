@@ -31,10 +31,9 @@ yargs(hideBin(process.argv))
                 type: 'string',
             });
         },
-        (yargs) => {
-            // TODO call function in app.js to search history
-            console.log(`Searching history ${yargs.keywords}`);
-        }
+       (yargs) => {
+    handleHistory();
+}
     )
     .help()
     .alias('h', 'help').argv;
