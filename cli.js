@@ -2,7 +2,9 @@ import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 
 yargs(hideBin(process.argv))
+    // Display the usage message when the user runs the command without any arguments
     .usage('Usage: $0 <command>')
+    // Define the "search" command with a required "keyword" argument
     .command(
         'search <keyword>',
         'Search by keyword',
@@ -17,8 +19,9 @@ yargs(hideBin(process.argv))
             console.log(`Search by keyword: ${yargs.keyword}`);
         }
     )
+    // Define the "history" command with a required "keywords" argument
     .command(
-        'history <keywords...>',
+        'history <keywords...>', // Use "keywords..." to allow multiple keywords
         'Search past by keywords',
         (yargs) => {
             yargs.positional('keywords', {
