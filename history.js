@@ -1,5 +1,5 @@
 import fs from "fs";
-import inquirer from "inquirer";
+import { select } from "@inquirer/prompts";
 import { runSearch } from "./app.js";
 
 function getHistory() {
@@ -24,21 +24,21 @@ export async function handleHistory() {
     return;
   }
 
-  const choices = ["Exit", ...history];
+  const answer = await select({
+    message: "Select a previous search:",
+    choices: [
+      { name: "Exit", value: "Exit" },
+      ...history.map((keyword) => ({
+        name: keyword,
+        value: keyword,
+      })),
+    ],
+  });
 
-  const answer = await inquirer.prompt([
-    {
-      type: "list",
-      name: "keyword",
-      message: "Select a previous search:",
-      choices: choices,
-    },
-  ]);
-
-  if (answer.keyword === "Exit") {
+  if (answer === "Exit") {
     console.log("Goodbye!");
     return;
   }
 
-  await runSearch(answer.keyword);
+  await runSearch(answer);
 }
